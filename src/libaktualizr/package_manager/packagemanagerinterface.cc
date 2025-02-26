@@ -196,6 +196,9 @@ TargetStatus PackageManagerInterface::verifyTarget(const Uptane::Target& target)
   } else if (target_exists->first > target.length()) {
     LOG_DEBUG << "File " << target.filename() << " was found in the database, but is oversized.";
     return TargetStatus::kOversized;
+  } else if (ostree_builtin_fsck(target_exists->second)) {
+    LOG_ERROR << "File " << target.filename() << " is corrupted.";
+    return TargetStatus::kCorrupted;
   }
 
   // Even if the file exists and the length matches, recheck the hash.
@@ -211,7 +214,7 @@ TargetStatus PackageManagerInterface::verifyTarget(const Uptane::Target& target)
 }
 
 bool PackageManagerInterface::checkAvailableDiskSpace(const uint64_t required_bytes) const {
-  struct statvfs stvfsbuf {};
+  struct statvfs stvfsbuf{};
   const int stat_res = statvfs(config.images_path.c_str(), &stvfsbuf);
   if (stat_res < 0) {
     LOG_WARNING << "Unable to read filesystem statistics: error code " << stat_res;
