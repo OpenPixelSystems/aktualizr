@@ -71,6 +71,7 @@ struct UptaneConfig {
   CryptoSource key_source{CryptoSource::kFile};
   KeyType key_type{KeyType::kRSA2048};
   bool force_install_completion{false};
+  bool disable_update_checking{false};
   boost::filesystem::path secondary_config_file;
   uint64_t secondary_preinstall_wait_sec{600U};
 

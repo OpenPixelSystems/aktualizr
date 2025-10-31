@@ -92,6 +92,7 @@ void UptaneConfig::updateFromPropertyTree(const boost::property_tree::ptree& pt)
   CopyFromConfig(key_source, "key_source", pt);
   CopyFromConfig(key_type, "key_type", pt);
   CopyFromConfig(force_install_completion, "force_install_completion", pt);
+  CopyFromConfig(disable_update_checking, "disable_update_checking", pt);
   CopyFromConfig(secondary_config_file, "secondary_config_file", pt);
   CopyFromConfig(secondary_preinstall_wait_sec, "secondary_preinstall_wait_sec", pt);
 }
@@ -103,6 +104,7 @@ void UptaneConfig::writeToStream(std::ostream& out_stream) const {
   writeOption(out_stream, key_source, "key_source");
   writeOption(out_stream, key_type, "key_type");
   writeOption(out_stream, force_install_completion, "force_install_completion");
+  writeOption(out_stream, disable_update_checking, "disable_update_checking");
   writeOption(out_stream, secondary_config_file, "secondary_config_file");
   writeOption(out_stream, secondary_preinstall_wait_sec, "secondary_preinstall_wait_sec");
 }
